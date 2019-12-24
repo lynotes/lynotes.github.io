@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>Hexo</title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/css/gitment.css">
+
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_859455_eaq7v6w8ktj.css">
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <div class="header-title">
+
+        </div>
+        <nav class="header-nav">
+            
+            <a href="/" class="header-nav-link" >
+                Home
+            </a>
+            
+
+            
+            <a href="/archives" class="header-nav-link">
+                Archives
+            </a>
+            
+
+            
+            <a href="/tags" class="header-nav-link">
+                Tags
+            </a>
+            
+
+            
+        </nav>
+    </div>
+</header>
+<header class="mobile-header">
+    <div class="mobile-nav">
+        <div class="mobile-nav-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mobile-nav-title">
+            <a href="/" class="mobile-nav-title-link">John Doe's Blog</a>
+        </div>
+
+    </div>
+    <nav class="mobile-menu">
+        <ul class="mobile-menu-list">
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-home"></i>
+                <a href="/" class="mobile-nav-link">Home</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-archive"></i>
+                <a href="/archives" class="mobile-nav-link">Archives</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-tag"></i>
+                <a href="/tags" class="mobile-nav-link">Tags</a>
+            </li>
+            <li class="mobile-menu-item">
+                <i class="iconfont icon-about"></i>
+                <a href="/about/" class="mobile-nav-link">About</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="main">
+    <div class="content-inner">
+        <div class="posts">
+    <article class="post-whole">
+        <div class="post-title">
+            <h2 class="title">Download Stock Historical Price using R</h2>
+            <div class="post-meta">
+                <span class="post-time">2017-12-25</span>
+                
+                <span class="post-category">
+                    
+                    <a class="category" href="/categories/stock/">stock</a>
+                    
+                </span>
+                
+                <span class="post-visit"> visited：<span id="busuanzi_value_page_pv"></span></span>
+            </div>
+        </div>
+        <div class="post-toc" id="post-toc">
+    <strong class="post-toc-title">目录</strong>
+    
+    <div class="back-to-top" id="back-to-top">
+        <a href="javascript:void(0);">回到顶部</a>
+    </div>
+</div>
+        <div class="post-content">
+            <p>关于美股历史价格的下载， 之前很多人一直用Yahoo API，今年年初时候Yahoo API不好用了，各路神仙开始另寻他法。网上search一圈，觉得用R里面的package tidyquant 下载SP500的历史数据算比较方便的，代码如下</p>
+<pre><code>install.packages(&quot;tidyquant&quot;)
+library(tidyquant)
+sp500&lt;-tq_index(&quot;sp500&quot;)%&gt;%tq_get(get=&quot;stock.prices&quot;)</code></pre><p>the sp500 data downloaded this way is a big data. Since R is not good at dealing with big data, I splited the download into three parts by the following way</p>
+<pre><code>sp01&lt;-tq_index(&quot;sp500&quot;)%&gt;%tq_get(get=&quot;stock.prices&quot;,from=&quot;2007-01-01,to=&quot;2010-12-31&quot;)
+SP1=sp01[complete.cases(sp01),]  #remove all &apos;NA&apos; values
+write.csv(sp1,file=&quot;c:/sp1.csv&quot;,row.names = FALSE) #prevent row names being writen to file
+
+sp02&lt;-tq_index(&quot;sp500&quot;)%&gt;%tq_get(get=&quot;stock.prices&quot;,from=&quot;2011-01-01&quot;,to=&quot;2013-12-31&quot;)
+SP2=sp02[complete.cases(sp02),]
+write.csv(sp2,file=&quot;c:/sp2.csv&quot;,row.names = FALSE)
+
+sp03&lt;-tq_index(&quot;sp500&quot;)%&gt;%tq_get(get=&quot;stock.prices&quot;,from=&quot;2014-01-01&quot;,to=&quot;2017-12-31&quot;)
+SP3=sp03[complete.cases(sp03),]
+write.csv(sp3,file=&quot;c:/sp3.csv&quot;,row.names = FALSE)</code></pre>
+        </div>
+        
+        <div class="post-tag">
+            
+            <a class="tag" href="/tags/stock/" title="stock">stock</a>
+            
+        </div>
+        
+    </article>
+</div>
+<div class="paginator">
+    
+        
+            <a class="prev" href="/2019/12/24/hello-world/">
+                <i class="iconfont icon-prev"></i>
+                <span class="nav-default">Hello World</span>
+                <span class="nav-mobile">Prev</span>
+            </a>
+        
+        
+            <a class="next" href="/2017/12/24/HEXO-Github-NEXT-Build-Blog/">
+                <span class="nav-default">HEXO + Github + NEXT Build Blog</span>
+                <span class="nav-mobile">Next</span>
+                <i class="iconfont icon-next"></i>
+            </a>
+        
+    
+</div>
+<div id="comment-container"></div>
+    </div>
+</div>
+<footer class="footer-social">
+    
+
+    
+
+    
+
+    <div class="footer-copyright">
+        <p class="time-line">
+            &copy;
+            
+            
+            2019
+            &nbsp;<i class="iconfont icon-heart"></i>&nbsp;
+            <a target="_blank" href="https://github.com/iJinxin">John Doe</a>
+        </p>
+        <p class="theme-info">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme -
+            <a target="_blank" href="https://github.com/iJinxin/hexo-theme-sky">Sky</a>
+        </p>
+    </div>
+</footer>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    
+
+</script>
+</html>
